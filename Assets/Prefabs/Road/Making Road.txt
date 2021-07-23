@@ -1,0 +1,8 @@
+Straightaways: Road (Cube) Object + Road Mat
+Flat Turns: Road (Path Creator) Object, space-topdown(xz), controlmode-automatic, RoadWidth-12.2f
+Elevation Change/Other Turns: Road (Path Creator) Object, space-3D(xyz), controlmode-automatic, RoadWidth-12.2f
+
+--Tips and Tricks---
+Road (Path Crerator) can be attached to Road (Cube) by double clicking anchor point and vertex snapping to road.
+Perform reveal transforms on anchor points by double clicking.
+ALWAYS remove the mesh collider from the meshholder object and re-ad it after transforming the pathcreator object

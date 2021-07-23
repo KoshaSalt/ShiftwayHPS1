@@ -1,0 +1,6 @@
+Teleporter works by randomly placing the transporter in front of the reciever then moving on player collision.
+This continues until the playe has traveled a certain distance, known as Infinite Road Length, a value in the SceneManager's counting script.
+
+Problem I forsee with this for the chase scene: you don't want to see the car popping into existance randomly. 
+If the car is hot on your tail and you go through the telepoerter before it, itll look like you're alone for a few seconds.
+Consider using this trick for the space in between story beats rather than the chase.

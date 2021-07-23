@@ -1,0 +1,7 @@
+Any scene should include:
+
+FirstPersonController prefab
+PSX prefab
+SceneManager prefab
+
+Rn, all prefabs should have all scipts in relevant active or deactive states and references intact.

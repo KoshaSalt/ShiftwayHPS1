@@ -1,0 +1,18 @@
+(Road Creator)
+The "Road Creator" prefab is our road. It is a bezier path that is generated between nodes which can be transformed.
+You can drop it into a scene and begin working on a road. Add nodes with shift+click. Remove nodes with ctrl+click.
+Editing the shape of the road is memory intensive and causes the scene view to lag heavily. But, the road itself is fairly lightweight.
+Even when stretched to a couple thousand unity long (as it is now), the mesh does not seem to cause and perfomance issues in play mode.
+
+(Road Mesh Holder)
+The graphical component of the road is delt with in the "Road Mesh Holder". It contains two materials for the road, one top and one bottom.
+Texture tiling and overall road widths however is managed in a script on the Road Creator game object. 
+The object should generate it's own Road Mesh holder, but in the event it doesn not, take the prefab here.
+The road mesh holder is finnicky as hell and often does not update the shape and location of the mesh collider after making changes to the road.
+I just go Mesh Collider -> Remove Component, Add Component -> Mesh Collider after I make a significant change to the road.
+
+(Default road settings as of 7/15)
+Road Width: 12
+Thickness: 0.5f
+Texture tiling: 100
+
