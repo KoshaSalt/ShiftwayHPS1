@@ -146,6 +146,24 @@ public class GetInOutCar : MonoBehaviour
         Debug.Log("Switching the camera.");
 
         yield return new WaitForSeconds(camSwitchTime);
+        if(isSeated == true)
+        {
+            cameraParent.position = interCamera.transform.position;
+            cameraParent.rotation = interCamera.transform.rotation;
+            playerCamera.transform.position = interCamera.transform.position;
+            playerCamera.transform.rotation = interCamera.transform.rotation;
+            
+            interCamera.GetComponent<CinemachineVirtualCamera>().Priority = 1;
+            playerCamera.GetComponent<CinemachineVirtualCamera>().Priority = 20;
+        }
+
+        if(isSeated != true)
+        {
+            interCamera.GetComponent<CinemachineVirtualCamera>().Priority = 1;
+            playerCamera.GetComponent<CinemachineVirtualCamera>().Priority = 20;
+        }
+
+
         this.GetComponent<FirstPersonController>().enabled = true;
         Debug.Log("Camera switch complete.");
     }
