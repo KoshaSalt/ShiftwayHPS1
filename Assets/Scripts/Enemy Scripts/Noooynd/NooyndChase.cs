@@ -15,7 +15,9 @@ public class NooyndChase : MonoBehaviour
     public GameObject sceneCounter;
     public GameObject noooyidPrefab;
     public float pursuitSpeed;
+    private float spawnCooldown = 2f;
     public float maxDistFromPlayer = 200;
+    public float nooooyndLiftForce = 100f;
     
     void Awake()
     {
@@ -23,6 +25,8 @@ public class NooyndChase : MonoBehaviour
         sceneCounter = GameObject.FindGameObjectWithTag("SceneManager");
         sceneCounter.GetComponent<Counting>().countNoooynd += 1;
         this.gameObject.name = ("Noooynd Chaser"); //#" + sceneCounter.GetComponent<Counting>().countNoooynd);
+        coolingDown = true;
+        StartCoroutine(MultiCooldown());
     }
 
     void Update()
@@ -38,17 +42,43 @@ public class NooyndChase : MonoBehaviour
             }
         }
 
-        if (Vector3.Distance(transform.position, player.position) >= maxDistFromPlayer || sceneCounter.GetComponent<Counting>().countNoooynd > 350)
+        if (Vector3.Distance(transform.position, player.position) >= maxDistFromPlayer || sceneCounter.GetComponent<Counting>().countNoooynd > 100)
         {
             KillNoooynd();
+        }
+
+        if(this.GetComponent<CharacterJoint>() != null)
+        {
+            spawnCooldown = 8f;
+
+            if(coolingDown == false)
+            {
+                SpawnNoooynd();
+            }
+
+            this.GetComponent<Rigidbody>().AddForce(transform.up * nooooyndLiftForce);
         }
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Player" && coolingDown == false)
+        if(col.gameObject.tag == ("Player") && coolingDown == false)
         {
+            spawnCooldown = 1f;
             SpawnNoooynd();
+        }
+
+        if(col.gameObject.tag == ("PlayerCar") && coolingDown == false)
+        {
+            spawnCooldown = 4f;
+            player = col.gameObject.transform;
+            SpawnNoooynd();
+            this.transform.GetChild(0).GetComponent<Expander>().enabled = false;
+            this.transform.GetChild(1).GetComponent<Expander>().enabled = false;
+
+            this.gameObject.AddComponent<CharacterJoint>();
+            this.GetComponent<CharacterJoint>().connectedBody = player.gameObject.GetComponent<Rigidbody>();
+            this.GetComponent<CharacterJoint>().enableCollision = true;
         }
     }
 
@@ -72,7 +102,7 @@ public class NooyndChase : MonoBehaviour
 
     IEnumerator MultiCooldown()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(spawnCooldown);
         coolingDown = false;
     }
 }

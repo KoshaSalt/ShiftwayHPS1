@@ -8,7 +8,9 @@ using VehicleBehaviour;
 
 public class GetInOutCar : MonoBehaviour
 {
-    public Transform cameraParent;
+    public GameObject cineBrain;
+    public GameObject CameraParent;
+    public GameObject carCamParent;
     public GameObject interCamera;
     public GameObject playerCamera;
     [ReadOnly]
@@ -148,13 +150,8 @@ public class GetInOutCar : MonoBehaviour
         yield return new WaitForSeconds(camSwitchTime);
         if(isSeated == true)
         {
-            cameraParent.position = interCamera.transform.position;
-            cameraParent.rotation = interCamera.transform.rotation;
-            playerCamera.transform.position = interCamera.transform.position;
-            playerCamera.transform.rotation = interCamera.transform.rotation;
-            
-            interCamera.GetComponent<CinemachineVirtualCamera>().Priority = 1;
-            playerCamera.GetComponent<CinemachineVirtualCamera>().Priority = 20;
+            CameraParent.transform.SetPositionAndRotation(interCamera.transform.position, interCamera.transform.rotation);
+            interCamera.transform.SetParent(CameraParent.transform);
         }
 
         if(isSeated != true)
@@ -162,6 +159,24 @@ public class GetInOutCar : MonoBehaviour
             interCamera.GetComponent<CinemachineVirtualCamera>().Priority = 1;
             playerCamera.GetComponent<CinemachineVirtualCamera>().Priority = 20;
         }
+        
+        // yield return new WaitForSeconds(camSwitchTime);
+        // if(isSeated == true)
+        // {
+        //     cameraParent.position = interCamera.transform.position;
+        //     cameraParent.rotation = interCamera.transform.rotation;
+        //     playerCamera.transform.position = interCamera.transform.position;
+        //     playerCamera.transform.rotation = interCamera.transform.rotation;
+            
+        //     interCamera.GetComponent<CinemachineVirtualCamera>().Priority = 1;
+        //     playerCamera.GetComponent<CinemachineVirtualCamera>().Priority = 20;
+        // }
+
+        // if(isSeated != true)
+        // {
+        //     interCamera.GetComponent<CinemachineVirtualCamera>().Priority = 1;
+        //     playerCamera.GetComponent<CinemachineVirtualCamera>().Priority = 20;
+        // }
 
 
         this.GetComponent<FirstPersonController>().enabled = true;
