@@ -10,6 +10,7 @@ TagManager:
   - EnemyCar
   - PlayerCar
   - Road
+  - BreakPoint
   layers:
   - Default
   - TransparentFX

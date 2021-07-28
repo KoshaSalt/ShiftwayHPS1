@@ -7,6 +7,8 @@ public class NooyndChase : MonoBehaviour
     [ReadOnly]
     public bool isPursuing = false;
     [ReadOnly]
+    public bool isFleeing = false;
+    [ReadOnly]
     public bool coolingDown;
     
     [ReadOnly]
@@ -58,6 +60,11 @@ public class NooyndChase : MonoBehaviour
 
             this.GetComponent<Rigidbody>().AddForce(transform.up * nooooyndLiftForce);
         }
+
+        if(isFleeing == true)
+        {
+            transform.position += -(transform.forward * pursuitSpeed * 2 * Time.deltaTime);
+        }
     }
 
     void OnCollisionEnter(Collision col)
@@ -79,6 +86,23 @@ public class NooyndChase : MonoBehaviour
             this.gameObject.AddComponent<CharacterJoint>();
             this.GetComponent<CharacterJoint>().connectedBody = player.gameObject.GetComponent<Rigidbody>();
             this.GetComponent<CharacterJoint>().enableCollision = true;
+        }
+    }
+
+    void OnTriggerEnter(Collider trig)
+    {
+        if(trig.gameObject.CompareTag("BreakPoint"))
+        {   
+            if(this.GetComponent<CharacterJoint>() != null)
+            {
+                Destroy(this.gameObject.GetComponent<CharacterJoint>());
+            }
+            
+            Destroy(this.gameObject.GetComponent<Collider>());
+            this.player = trig.transform;
+
+            isPursuing = false;
+            isFleeing = true;
         }
     }
 
