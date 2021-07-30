@@ -9,17 +9,19 @@ public class CarOnRoad : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.tag == "Road" || col.gameObject.tag == "SafeFromBird")
+        if(col.CompareTag("Road") || col.CompareTag("SafeFromBird"))
         {
             carIsOnRoad = true;
         }
     }
 
-    void OnTriggerExit(Collider col)
+    IEnumerator OnTriggerExit(Collider col)
     {
-        if(col.gameObject.tag == "Road" || col.gameObject.tag == "SafeFromBird")
+        yield return new WaitForSeconds(5);
+        if(col.CompareTag("Road") || col.CompareTag("SafeFromBird"))
         {
             carIsOnRoad = false;
+            Debug.Log("Left road");
         }
     }
 }

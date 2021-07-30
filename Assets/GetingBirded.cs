@@ -111,21 +111,22 @@ public class GetingBirded : MonoBehaviour
             birdCountDown--;
         }
 
-        if(this.transform.parent != null)
-        {
-            if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == false)
-            {
-                isOnRoad = false;
-            }
+        ////This is for if we use a seperate script to check the car's offroading bool.
+        // if(this.transform.parent != null)
+        // {
+        //     if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == false)
+        //     {
+        //         isOnRoad = false;
+        //     }
 
-            if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == true)
-            {
-                isOnRoad = true;
-            }
-        }
+        //     if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == true)
+        //     {
+        //         isOnRoad = true;
+        //     }
+        // }
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if(col.gameObject.tag == "Road" || col.gameObject.tag == "SafeFromBird")
         {
@@ -134,7 +135,7 @@ public class GetingBirded : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision col)
+    void OnTriggerExit(Collider col)
     {
         if(col.gameObject.tag == "Road" || col.gameObject.tag == "SafeFromBird")
         {

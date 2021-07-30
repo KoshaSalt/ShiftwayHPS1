@@ -11,6 +11,7 @@ TagManager:
   - PlayerCar
   - Road
   - BreakPoint
+  - SafeFromBird
   layers:
   - Default
   - TransparentFX
