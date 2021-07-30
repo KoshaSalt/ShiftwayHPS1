@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class GetingBirded : MonoBehaviour
 {
+    public GameObject birdGod;
     public GameObject markerPrefab;
     public Text roadIndicator;
-    private int birdCountDownMax = 60;
+    public int birdCountDownMax = 60;
+    public int birdCountDown;
     public float playerMaxBacktrack = 100;
     [ReadOnly]
     public float playerMarkerDistZ;
     [ReadOnly]
     public float playerMarkerDistX;
     private string roadName;
-    [ReadOnly]
-    private int birdCountDown;
     [ReadOnly]
     public bool isOnRoad;
     [ReadOnly]
@@ -75,7 +75,7 @@ public class GetingBirded : MonoBehaviour
 
             if(birdCountDown < birdCountDownMax)
             {
-                timeCount = timeCount + 3*Time.deltaTime;
+                timeCount = timeCount + 1*Time.deltaTime;
             }
         }
 
@@ -110,6 +110,19 @@ public class GetingBirded : MonoBehaviour
         {
             birdCountDown--;
         }
+
+        if(this.transform.parent != null)
+        {
+            if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == false)
+            {
+                isOnRoad = false;
+            }
+
+            if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == true)
+            {
+                isOnRoad = true;
+            }
+        }
     }
 
     void OnCollisionEnter(Collision col)
@@ -135,11 +148,13 @@ public class GetingBirded : MonoBehaviour
         //Load last checkpoint
 
         birdingInitiated = true;
+        Instantiate(birdGod);
         Debug.LogError("You were unworthy of my death.");
     }
 
     public void DropMarker()
     {
+        Destroy(oldMarker);
         oldMarker = newMarker;
         newMarker = Instantiate(markerPrefab, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), Quaternion.identity);
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     public Quaternion playerRotation;
     [ReadOnly]
     public bool isSeated;
+    public GameObject deathScreen;
     void Update()
     {
         playerPosition = this.gameObject.transform.position;
@@ -45,5 +47,12 @@ public class Player : MonoBehaviour
     public void ClearSave()
     {
         //button to clear the save.
+    }
+
+    public void PlayerDeath()
+    {
+        deathScreen.SetActive(true);
+        //Play tape rewind sound effect.
+        //LoadPlayer(), once this is working.
     }
 }
