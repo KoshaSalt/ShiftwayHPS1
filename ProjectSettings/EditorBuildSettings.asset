@@ -8,10 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/_Old/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: ff9b12df8eb4f2641aa9a1d9a0d6d59b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test Levels/Greybox Road Cinemachine Tests.unity
     guid: 1d6a517b20ff1ab419eaf3ec61f04345
+  - enabled: 1
+    path: Assets/Scenes/Greybox Road.unity
+    guid: 39132cb958894934f8b6a235f566619d
   m_configObjects: {}

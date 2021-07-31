@@ -12,6 +12,7 @@ TagManager:
   - Road
   - BreakPoint
   - SafeFromBird
+  - Terrain
   layers:
   - Default
   - TransparentFX

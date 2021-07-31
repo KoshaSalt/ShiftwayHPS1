@@ -70,7 +70,7 @@ public class GetingBirded : MonoBehaviour
         //This occurs 3x faster than it is depleted by backtracking or offroading.
         if(isOnRoad == true && isBacktracking == false)
         {
-            roadIndicator.text = ("Safe: " + roadName);
+            roadIndicator.text = ("Progressing, " + roadName);
             roadIndicator.color = Color.green;
 
             if(birdCountDown < birdCountDownMax)
@@ -83,7 +83,7 @@ public class GetingBirded : MonoBehaviour
         //This is becuase if the player is backtracking and is on the road, we still want to deduct.
         if(isOnRoad == false && isBacktracking == false)
         {
-            roadIndicator.text = ("Offroading, bird Countdown " + birdCountDown.ToString("00"));
+            roadIndicator.text = ("Offroading, Bird Countdown " + birdCountDown.ToString("00"));
             roadIndicator.color = Color.red;
             
             timeCount -= 1*Time.deltaTime;
@@ -126,12 +126,14 @@ public class GetingBirded : MonoBehaviour
         // }
     }
 
-    void OnTriggerEnter(Collider col)
+    IEnumerator OnTriggerEnter(Collider col)
     {
+        yield return new WaitForSeconds(.25f);
+
         if(col.gameObject.tag == "Road" || col.gameObject.tag == "SafeFromBird")
         {
             isOnRoad = true;
-            roadName = col.gameObject.name;
+            roadName = col.gameObject.transform.parent.name;
         }
     }
 
@@ -142,6 +144,14 @@ public class GetingBirded : MonoBehaviour
             isOnRoad = false;
         }
     }
+
+    // void OnTriggerExit(Collider col)
+    // {
+    //     if(col.gameObject.tag == "Road" || col.gameObject.tag == "SafeFromBird")
+    //     {
+    //         isOnRoad = false;
+    //     }
+    // }
 
     void Bird()
     {
