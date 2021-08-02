@@ -10,7 +10,7 @@ public class GetingBirded : MonoBehaviour
     public Text roadIndicator;
     public int birdCountDownMax = 60;
     public int birdCountDown;
-    public float playerMaxBacktrack = 100;
+    public float playerMaxBacktrack;
     [ReadOnly]
     public float playerMarkerDistZ;
     [ReadOnly]
@@ -35,7 +35,7 @@ public class GetingBirded : MonoBehaviour
     void Update()
     {
         //Begin dropping the markers for backtrack checking.
-        if(droppingMarker == false)
+        if(droppingMarker == false && isBacktracking == false)
         {
             StartCoroutine(MarkerDropCountdown());
         }
@@ -48,13 +48,12 @@ public class GetingBirded : MonoBehaviour
             playerMarkerDistX = Mathf.Abs(this.transform.position.x - newMarker.transform.position.x);
             playerMarkerDistZ = Mathf.Abs(this.transform.position.z - newMarker.transform.position.z);
 
-            if(playerMarkerDistX >= playerMaxBacktrack || playerMarkerDistZ >= playerMaxBacktrack)
+            if(playerMarkerDistX + playerMarkerDistZ >= playerMaxBacktrack)
             {
                 isBacktracking = true;
             }
 
-            //Where'd the z checker go?
-            if(playerMarkerDistX <= playerMaxBacktrack)
+            else
             {
                 isBacktracking = false;
             }
@@ -70,7 +69,7 @@ public class GetingBirded : MonoBehaviour
         //This occurs 3x faster than it is depleted by backtracking or offroading.
         if(isOnRoad == true && isBacktracking == false)
         {
-            roadIndicator.text = ("Progressing, " + roadName);
+            roadIndicator.text = (roadName);
             roadIndicator.color = Color.green;
 
             if(birdCountDown < birdCountDownMax)
@@ -110,20 +109,6 @@ public class GetingBirded : MonoBehaviour
         {
             birdCountDown--;
         }
-
-        ////This is for if we use a seperate script to check the car's offroading bool.
-        // if(this.transform.parent != null)
-        // {
-        //     if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == false)
-        //     {
-        //         isOnRoad = false;
-        //     }
-
-        //     if(this.GetComponent<GetInOutCar>().isSeated == true && this.transform.GetComponentInParent<CarOnRoad>().carIsOnRoad == true)
-        //     {
-        //         isOnRoad = true;
-        //     }
-        // }
     }
 
     IEnumerator OnTriggerEnter(Collider col)
@@ -144,14 +129,6 @@ public class GetingBirded : MonoBehaviour
             isOnRoad = false;
         }
     }
-
-    // void OnTriggerExit(Collider col)
-    // {
-    //     if(col.gameObject.tag == "Road" || col.gameObject.tag == "SafeFromBird")
-    //     {
-    //         isOnRoad = false;
-    //     }
-    // }
 
     void Bird()
     {
@@ -194,16 +171,8 @@ public class GetingBirded : MonoBehaviour
             DropMarker();
         }
 
-        //////I think this can stand as is for now. The trick might be to adjust the track so that the player is "technically" always moving forward in the x direction and make the tolerance high.
-        // //If the player has NOT progressed in the x direction, but has progressed in the z direction, drop a marker.
-        // if(this.transform.position.x <= oldMarker.transform.position.x && this.transform.position.z >= oldMarker.transform.position.z)
-        // {
-        //     DropMarker();
-        //     isBacktracking = false;
-        // }
-
-        //If player has not progressed in the X or Z direction, they are probably backtracking...
-        else {isBacktracking = true;}
+        // //If player has not progressed in the X or Z direction, they are probably backtracking...
+        // else {isBacktracking = true;}
 
         //Debug colors and restart coroutine.
         oldMarker.gameObject.GetComponent<MeshRenderer>().material.color = Color.black;

@@ -36,6 +36,11 @@ public class GetInOutCar : MonoBehaviour
             if(isSeated == true)
             {
                 failSafe = true;
+                //If the player gets out of the car mid drive, toggles ignition.
+                //We could make it so that getting out of the car mid drive is a failstate...
+                //...or simply impossible when the car is above certain speeds.
+                targetCar.gameObject.GetComponent<WheelVehicle>().isPlayer = false;
+
                 this.gameObject.transform.parent = null;
                 this.gameObject.transform.position = outsideDoor.position;
                 this.gameObject.GetComponent<FirstPersonController>().playerCanMove = true;
