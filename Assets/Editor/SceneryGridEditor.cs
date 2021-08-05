@@ -6,7 +6,7 @@ using UnityEditor;
 [CustomEditor(typeof(GridManager))]
 public class SceneryGridEditor : Editor
 {
-    public override void OnInspectorGUI()
+    public override void OnInspectorGUI ()
     {
         DrawDefaultInspector();
 
