@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public bool editing;
     [ReadOnly]
     public Vector3 playerPosition;
     [ReadOnly]
@@ -17,6 +19,11 @@ public class Player : MonoBehaviour
         playerPosition = this.gameObject.transform.position;
         playerRotation = this.gameObject.transform.rotation;
         isSeated = this.GetComponentInChildren<GetInOutCar>().isSeated;
+
+        if(Input.GetKeyDown("0"))
+        {
+            PlayerDeath();
+        }
     }
 
     public void SavePlayer()
@@ -52,7 +59,20 @@ public class Player : MonoBehaviour
     public void PlayerDeath()
     {
         deathScreen.SetActive(true);
+        StartCoroutine(ReloadGame());
+
         //Play tape rewind sound effect.
         //LoadPlayer(), once this is working.
+    }
+
+    void OnLevelWasLoaded()
+    {
+        LoadPlayer();
+    }
+
+    IEnumerator ReloadGame()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

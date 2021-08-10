@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class DanceSpot : MonoBehaviour
 {
-    [ReadOnly]
     public bool isFinal;
+    public AudioClip arrivalClip;
     public void OnTriggerEnter(Collider col)
     {
         if(col.CompareTag("Player"))
-        {
+        {            
             if(isFinal == false)
             {
                 Debug.Log("Arrived at " + this.name + ".");
-                this.transform.parent.GetComponent<CarDancing>().onArrive();
+                this.transform.parent.GetComponent<CarDancing>().onArrive(arrivalClip);
                 this.gameObject.SetActive(false);
-                //playOnArrival
             }
 
             if(isFinal == true)

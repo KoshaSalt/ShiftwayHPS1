@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CarDancing : MonoBehaviour
 {
     [ReadOnly]
-    public GameObject nextSpot;
-    public GameObject playerCar;
-    public GameObject [] dance; 
+    public float danceCountdown = 15f;
     [ReadOnly]
-    public AudioSource [] arrivalClips;
+    public GameObject nextSpot;
+    [ReadOnly]
+    public bool danceHasBegun;
+    public GameObject playerCar;
+    public AudioSource lightOnFX;
+    public GameObject [] dance; 
+    public AudioSource danceAudioSource;
 
-    
-    void Start()
+    void Awake()
     {
         foreach(GameObject spots in dance)
         {
@@ -20,27 +24,24 @@ public class CarDancing : MonoBehaviour
         }
 
         nextSpot = dance[0];
-        nextSpot.SetActive(true);
     }
 
     void Update()
     {
-        
+        danceCountdown -= Time.deltaTime;
     }
 
-    public void onArrive()
+    public void onArrive(AudioClip arrivalClip)
     {
         int clipNum = System.Array.IndexOf(dance, nextSpot);
         clipNum++;
         nextSpot = dance[clipNum];
         nextSpot.SetActive(true);
 
-        if(clipNum == 5)
-        {
-            nextSpot.GetComponent<DanceSpot>().isFinal = true;
-        }
-
-        //arrivalClips[clipNum].Play();
-        
+        danceAudioSource.clip = arrivalClip;
+        lightOnFX.PlayOneShot(lightOnFX.clip);
+        danceAudioSource.PlayScheduled(lightOnFX.clip.length + 3f);
     }
+
+
 }
