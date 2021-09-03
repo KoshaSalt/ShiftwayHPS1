@@ -95,7 +95,7 @@ public class GetInOutCar : MonoBehaviour
 
 
         //It's the code for ignition,
-        if(Input.GetKeyDown("f"))
+        if(Input.GetKeyDown("b"))
         {
             if(isSeated == true && targetCar.gameObject.GetComponent<WheelVehicle>().isPlayer == false)
             {
@@ -105,7 +105,7 @@ public class GetInOutCar : MonoBehaviour
         }
 
         //hot an fresh out the kitchen.
-        if(Input.GetKeyDown("f"))
+        if(Input.GetKeyDown("b"))
         {
             if(isSeated == true && targetCar.gameObject.GetComponent<WheelVehicle>().isPlayer == true)
             {
